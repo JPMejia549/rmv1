@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 20px;
+            padding: 0;
+        }
+
+        .personaje{
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            cursor: pointer;
+        }
+
+        .personaje img{
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+
+        .personaje h3{
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Proy Jhony - Personajes Rick and Morty</h1>
+    <!-- contenedor donde se insertan los Personajes -->
+    <div id="contenedor-personajes"></div>
+    <script>
+        //Url de la API  de Rick and Morty para obtener los personajes
+        const urlAPI = "https://rickandmortyapi.com/api/character"
+
+        //Obtenemos el comentario en el HTML donde se mostraran los personajes
+        const contenedorPersonajes = document.getElementById("contenedor-personajes")
+
+        async function obtenerPersonajes(){
+
+            try{
+
+                //Relizamos la solicitud utilizando fetch para obtener los datos
+                const respuesta = await fetch(urlAPI)
+
+                // Convertimos la respuesta a JSON
+                const datos = await respuesta.json()
+
+                //Llamamos a la funcion mostrarPersonajes pasando el array personajes
+
+                mostrarPersonajes(datos.results)
+
+            } catch (error){
+                console.log(error)
+
+            }
+        
+        }
+        //Funcion para insertar los personajes en HTML
+        async function mostrarPersonajes(personajes){
+
+            personajes.forEach(personaje =>{
+
+                //Creamos un nuevo elemento DIV pra cada personaje
+                const divPersonaje = document.createElement('div')
+
+                divPersonaje.classList.add("personaje")
+
+                divPersonaje.innerHTML = `
+                <img src="${personaje.image}">
+                <div>
+                    <h3>${personaje.name} </h3>
+                    <p>Estado: ${personaje.status}</p>
+                    <p>Especie: ${personaje.species}</p>
+                </div>
+                `
+                //Logica para insertarle un escuchador cuando se haga clik en el personaje para redirigir a la pagina de detalles
+
+                //Aqui codigo
+
+                //Añadiimos
+                contenedorPersonajes.appendChild(divPersonaje)
+
+
+            });
+        }
+
+        obtenerPersonajes()
+    </script>
+</body>
+</html>
